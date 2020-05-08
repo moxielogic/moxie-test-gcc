@@ -2,10 +2,12 @@ FROM atgreen/moxielogic-builder-el7-base
 
 MAINTAINER Anthony Green <green@moxielogic.com>
 
+RUN mkdir -p /home/moxie
+
 ADD Moxie_Logic.repo /etc/yum.repos.d/Moxie_Logic.repo
-ADD site.exp /root/site.exp
-ADD moxie-sim.exp /root/moxie-sim.exp
-ADD test_results.patch /root/test_results.patch
+ADD site.exp /home/moxie/site.exp
+ADD moxie-sim.exp /home/moxie/moxie-sim.exp
+ADD test_results.patch /home/moxie/test_results.patch
 
 RUN rpm -ivh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm && \
     yum -y install git curl jq \
@@ -19,8 +21,11 @@ RUN rpm -ivh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.
                    moxielogic-moxie-elf-binutils \
                    moxielogic-moxie-elf-gdb-sim
 
-RUN mkdir /root/.ssh && ssh-keyscan github.com > ~/.ssh/known_hosts
-ADD config /root/.ssh/config
+RUN mkdir /home/moxie/.ssh && ssh-keyscan github.com > /home/moxie/.ssh/known_hosts
+ADD config /home/moxie/.ssh/config
 
-COPY ./moxie-test-gcc.sh /root/moxie-test-gcc.sh
+COPY ./moxie-test-gcc.sh /home/moxie/moxie-test-gcc.sh
+
+RUN chmod -R go+rx /home
+
 

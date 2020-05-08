@@ -1,0 +1,35 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: moxie-test-gcc
+  namespace: moxie
+spec:
+  parallelism: 1    
+  completions: 1    
+  activeDeadlineSeconds: 10800 
+  backoffLimit: 6   
+  template:         
+    metadata:
+      name: moxie-test-gcc
+    spec:
+      containers:
+      - name: moxie-test-gcc
+        image: "image-registry.openshift-image-registry.svc:5000/moxie/moxie-test-gcc"
+        command: ["/root/moxie-test-gcc.sh"]
+        env:
+          - name: MOXIELOGIC_MAIL_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: moxielogic-mail-password
+                key: MOXIELOGIC_MAIL_PASSWORD
+          - name: VAULT_MOXIEDEV_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: vault-moxiedev-token
+                key: VAULT_MOXIEDEV_TOKEN
+          - name: RLGL_KEY
+            valueFrom:
+              secretKeyRef:
+                name: rlgl-key
+                key: RLGL_KEY
+      restartPolicy: OnFailure

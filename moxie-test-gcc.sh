@@ -2,9 +2,9 @@
 
 set -x
 
-cd /root
+cd /home/moxie
 export PATH=/opt/moxielogic/bin:$PATH
-export DEJAGNU=/root/site.exp
+export DEJAGNU=/home/moxie/site.exp
 
 yum -y update moxielogic-moxie-elf-newlib \
               moxielogic-moxie-elf-binutils \
@@ -39,7 +39,7 @@ git clone --progress --depth 1 https://gcc.gnu.org/git/gcc.git
 #   https://gcc.gnu.org/bugzilla/show_bug.cgi?id=28123
 (cd gcc; ./contrib/gcc_update --touch)
 
-patch -p0 < /root/test_results.patch
+patch -p0 < /home/moxie/test_results.patch
 
 mkdir build
 cd build
