@@ -2,6 +2,29 @@
 - name: Test moxie gcc port
   hosts: all
   tasks:
-    - name: Run the testing container
+    - name: Delete any existing test pod
       shell: |
-        podman run -e RLGL_KEY={{ rlgl_key }} -e VAULT_MOXIEDEV_TOKEN={{ vault_moxiedev_token }} --rm -t -i docker.io/atgreen/moxie-test-gcc /root/moxie-test-gcc.sh
+        oc -n moxie \
+          delete pod moxie-test-gcc --grace-period=0 --ignore-not-found
+
+    - name: Template test pod
+      set_fact:
+        management_pod: "{{ lookup('file', 'moxie-test-gcc-pod.yml') }}"
+
+    - name: Create test pod
+      shell: |
+        echo {{ management_pod | quote }} | oc apply -f -
+
+    - name: Wait for test pod to start
+      shell: |
+        oc -n moxie \
+          get pod moxie-test-gcc -o jsonpath="{.status.phase}"
+      register: result
+      until: result.stdout == "Running"
+      retries: 60
+      delay: 10
+
+    - name: Run test
+      shell: |
+        oc -n moxie exec moxie-test-gcc -- \
+          bash -c "/root/moxie-test-gcc.sh"

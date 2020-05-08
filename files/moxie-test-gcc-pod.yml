@@ -7,7 +7,7 @@ metadata:
 spec:
   containers:
     - name: moxie-test-gcc
-      image: "docker-registry.default.svc:5000/moxie/moxie-test-gcc:latest"
+      image: "image-registry.openshift-image-registry.svc:5000/moxie/moxie-test-gcc"
       command: ["sleep", "infinity"]
       env:
         - name: MOXIELOGIC_MAIL_PASSWORD
