@@ -1,6 +1,9 @@
 ---
 - name: Test moxie gcc port
   hosts: all
+  environment:
+    KUBECONFIG: "/home/green/.kubeconfig"
+
   tasks:
     - name: Delete any existing test pod
       shell: |
