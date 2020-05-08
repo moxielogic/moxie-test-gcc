@@ -1,0 +1,7 @@
+---
+- name: Test moxie gcc port
+  hosts: all
+  tasks:
+    - name: Run the testing container
+      shell: |
+        podman run -e RLGL_KEY={{ rlgl_key }} -e VAULT_MOXIEDEV_TOKEN={{ vault_moxiedev_token }} --rm -t -i docker.io/atgreen/moxie-test-gcc /root/moxie-test-gcc.sh

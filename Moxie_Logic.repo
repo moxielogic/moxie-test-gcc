@@ -1,0 +1,5 @@
+[MoxieLogic]
+name=MoxieLogic
+baseurl=https://repos.moxielogic.org:7007/MoxieLogic/
+enabled=1
+gpgcheck=0

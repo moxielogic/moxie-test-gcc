@@ -1,0 +1,5 @@
+# The ssh key is extracted from our vault at container runtime, and
+# stored in ephemeral in-memory tmpfs.
+
+Host github.com
+     IdentityFile /tmp/id_rsa

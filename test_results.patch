@@ -1,0 +1,25 @@
+--- gcc/contrib/test_summary.old	2018-10-08 01:57:41.709248013 +0000
++++ gcc/contrib/test_summary	2018-10-08 02:29:33.738121812 +0000
+@@ -97,7 +97,7 @@
+   lang=""; configflags = "";
+   address="gcc-testresults@gcc.gnu.org";
+   version="gcc";
+-  print "cat <<'"'"'EOF'"'"' |";
++  print "cat <<'"'"'EOF'"'"' > report.txt";
+ '${prepend_logs+"  system(\"cat $prepend_logs\"); "}'
+ }
+ NR == 1 {
+@@ -144,7 +144,12 @@
+   if (boot_cflags != 0) print boot_cflags;
+ '${append_logs+"  system(\"cat $append_logs\"); "}'
+   print "EOF";
+-  print "Mail -s \"Results for " prefix version lang "testsuite on " host "\" '"${mailto}"' &&";
++  print "cat <<'"'"'EOF'"'"' > header.txt"
++  print "From: Anthony Green <green@moxielogic.com>"
++  print "To: gcc-testresults@gcc.gnu.org"
++  print "Subject: Results for " prefix version lang "testsuite on " host
++  print "EOF";
++  print "(cat header.txt; echo; echo rlgl policy check: " ENVIRON["RLGL"] "; echo; cat report.txt) | msmtp -A moxielogic gcc-testresults@gcc.gnu.org";
+ }}
+ { next; }
+ ' | sed "s/\([\`\$\\\\]\)/\\\\\\1/g" &&
