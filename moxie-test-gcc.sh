@@ -2,9 +2,11 @@
 
 set -x
 
-cd /home/moxie
+export HOME=/home/moxie
+
+cd ${HOME}
 export PATH=/opt/moxielogic/bin:$PATH
-export DEJAGNU=/home/moxie/site.exp
+export DEJAGNU=${HOME}/site.exp
 
 SECRETS=`curl -H "X-Vault-Token: $VAULT_MOXIEDEV_TOKEN" -X GET https://vault-labdroid.apps.ocp.labdroid.net/v1/secret/moxiedev`
 echo $SECRETS | (umask 077 && jq -r .data.id_moxiedev_rsa > /tmp/id_rsa)
@@ -35,7 +37,7 @@ git clone --progress --depth 1 https://gcc.gnu.org/git/gcc.git
 #   https://gcc.gnu.org/bugzilla/show_bug.cgi?id=28123
 (cd gcc; ./contrib/gcc_update --touch)
 
-patch -p0 < /home/moxie/test_results.patch
+patch -p0 < ${HOME}/test_results.patch
 
 mkdir build
 cd build
