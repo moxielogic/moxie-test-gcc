@@ -38,10 +38,10 @@ RUN chown -R ${USER_UID}:0 /home/moxie && \
 
 USER 10001
 WORKDIR /home/moxie
+
+RUN curl --verbose https://google.com
+
 ### NSS_WRAPPER for user name recognition at runtime w/ an arbitrary uid - for OpenShift deployments
 RUN sed "s@${USER_NAME}:x:${USER_UID}:0@${USER_NAME}:x:\${USER_ID}:\${GROUP_ID}@g" /etc/passwd > /home/moxie/etc/passwd.template
 ENTRYPOINT [ "nss_entrypoint" ]
 CMD run
-
-
-
