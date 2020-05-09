@@ -17,6 +17,7 @@ RUN rpm -ivh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.
                    msmtp \
 		   wget \
                    ca-certificates \
+		   nss\* \
                    moxielogic-moxie-elf-newlib \
                    moxielogic-moxie-elf-binutils \
                    moxielogic-moxie-elf-gdb-sim
