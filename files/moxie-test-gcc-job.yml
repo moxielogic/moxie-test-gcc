@@ -15,7 +15,7 @@ spec:
       containers:
       - name: moxie-test-gcc
         image: "image-registry.openshift-image-registry.svc:5000/moxie/moxie-test-gcc"
-        command: ["/root/moxie-test-gcc.sh"]
+        command: ["/home/moxie/moxie-test-gcc.sh"]
         env:
           - name: MOXIELOGIC_MAIL_PASSWORD
             valueFrom:

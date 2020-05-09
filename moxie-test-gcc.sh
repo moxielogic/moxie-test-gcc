@@ -6,10 +6,6 @@ cd /home/moxie
 export PATH=/opt/moxielogic/bin:$PATH
 export DEJAGNU=/home/moxie/site.exp
 
-yum -y update moxielogic-moxie-elf-newlib \
-              moxielogic-moxie-elf-binutils \
-              moxielogic-moxie-elf-gdb-sim
-
 SECRETS=`curl -H "X-Vault-Token: $VAULT_MOXIEDEV_TOKEN" -X GET https://vault-labdroid.apps.ocp.labdroid.net/v1/secret/moxiedev`
 echo $SECRETS | (umask 077 && jq -r .data.id_moxiedev_rsa > /tmp/id_rsa)
 git config --global user.email "bot@moxielogic.com"
