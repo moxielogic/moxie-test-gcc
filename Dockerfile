@@ -8,13 +8,14 @@ ENV USER_NAME=moxie \
 
 RUN rpm -ivh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm && \
     yum -y install git curl jq \
+                   strace \
                    patch \
                    autogen \
                    dejagnu \
                    msmtp \
-		   wget \
+                   wget \
                    ca-certificates \
-		   nss_wrapper \
+                   nss_wrapper \
                    moxielogic-moxie-elf-newlib \
                    moxielogic-moxie-elf-binutils \
                    moxielogic-moxie-elf-gdb-sim
@@ -38,8 +39,6 @@ RUN chown -R ${USER_UID}:0 /home/moxie && \
 
 USER 10001
 WORKDIR /home/moxie
-
-RUN curl --verbose https://google.com
 
 ### NSS_WRAPPER for user name recognition at runtime w/ an arbitrary uid - for OpenShift deployments
 RUN sed "s@${USER_NAME}:x:${USER_UID}:0@${USER_NAME}:x:\${USER_ID}:\${GROUP_ID}@g" /etc/passwd > /home/moxie/etc/passwd.template

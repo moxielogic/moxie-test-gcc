@@ -12,7 +12,9 @@ ls -l /etc/pki/tls/certs/ca-bundle.crt
 ls -ld /etc/pki/tls/certs/ca-bundle.crt
 find /etc/pki
 
-SECRETS=`curl --verbose -H "X-Vault-Token: $VAULT_MOXIEDEV_TOKEN" -X GET https://vault-labdroid.apps.ocp.labdroid.net/v1/secret/moxiedev`
+strace curl --verbose -H "X-Vault-Token: $VAULT_MOXIEDEV_TOKEN" -X GET https://vault-labdroid.apps.ocp.labdroid.net/v1/secret/moxiedev
+
+SECRETS=`strace curl --verbose -H "X-Vault-Token: $VAULT_MOXIEDEV_TOKEN" -X GET https://vault-labdroid.apps.ocp.labdroid.net/v1/secret/moxiedev`
 echo $SECRETS | (umask 077 && jq -r .data.id_moxiedev_rsa > /tmp/id_rsa)
 git config --global user.email "bot@moxielogic.com"
 git config --global user.name "Moxie Bot"
