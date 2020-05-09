@@ -8,8 +8,8 @@ cd ${HOME}
 export PATH=/opt/moxielogic/bin:$PATH
 export DEJAGNU=${HOME}/site.exp
 
-touch ${HOME}/THISFILE
-ls -l ${HOME}
+ls -l /dev/urandom
+cat /dev/urandom | tr -dc _A-Z-a-z-0-9 | head -c${1:-10}
 
 strace curl --verbose -H "X-Vault-Token: $VAULT_MOXIEDEV_TOKEN" -X GET https://vault-labdroid.apps.ocp.labdroid.net/v1/secret/moxiedev
 
