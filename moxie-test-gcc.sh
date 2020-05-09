@@ -8,9 +8,8 @@ cd ${HOME}
 export PATH=/opt/moxielogic/bin:$PATH
 export DEJAGNU=${HOME}/site.exp
 
-ls -l /etc/pki/tls/certs/ca-bundle.crt 
-ls -ld /etc/pki/tls/certs/ca-bundle.crt
-find /etc/pki
+touch ${HOME}/THISFILE
+ls -l ${HOME}
 
 strace curl --verbose -H "X-Vault-Token: $VAULT_MOXIEDEV_TOKEN" -X GET https://vault-labdroid.apps.ocp.labdroid.net/v1/secret/moxiedev
 
