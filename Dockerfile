@@ -6,6 +6,9 @@ ENV USER_NAME=moxie \
     USER_UID=10001 \
     HOME=/home/moxie
 
+RUN ls -ld /dev
+RUN ls -l /dev
+
 RUN rpm -ivh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm && \
     yum -y install git curl jq \
                    strace \
@@ -44,3 +47,6 @@ WORKDIR /home/moxie
 RUN sed "s@${USER_NAME}:x:${USER_UID}:0@${USER_NAME}:x:\${USER_ID}:\${GROUP_ID}@g" /etc/passwd > /home/moxie/etc/passwd.template
 ENTRYPOINT [ "nss_entrypoint" ]
 CMD run
+
+RUN ls -ld /dev
+RUN ls -l /dev
