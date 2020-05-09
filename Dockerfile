@@ -2,7 +2,7 @@ FROM atgreen/moxielogic-builder-el7-base
 
 MAINTAINER Anthony Green <green@moxielogic.com>
 
-RUN mkdir -p /home/moxie
+RUN mkdir -p /home/moxie && chmod 777 /home/moxie
 
 ADD Moxie_Logic.repo /etc/yum.repos.d/Moxie_Logic.repo
 ADD site.exp /home/moxie/site.exp
@@ -26,6 +26,7 @@ ADD config /home/moxie/.ssh/config
 
 COPY ./moxie-test-gcc.sh /home/moxie/moxie-test-gcc.sh
 
-RUN chmod -R go+rx /home
+RUN find /home/moxie | xargs ls -l
+
 
 
