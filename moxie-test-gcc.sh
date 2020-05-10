@@ -5,6 +5,8 @@ set -x
 export HOME=/home/moxie
 
 cd ${HOME}
+chmod go-rw ${HOME}/.msmtprc
+
 export PATH=/opt/moxielogic/bin:$PATH
 export DEJAGNU=${HOME}/site.exp
 
