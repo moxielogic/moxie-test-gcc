@@ -8,17 +8,7 @@ cd ${HOME}
 export PATH=/opt/moxielogic/bin:$PATH
 export DEJAGNU=${HOME}/site.exp
 
-whoami
-id
-ls -l /dev
-ls -ld /dev
-ls -l /dev/urandom
-ls -ld /dev/urandom
-cat /dev/urandom | tr -dc _A-Z-a-z-0-9 | head -c${1:-10}
-
-strace curl --verbose -H "X-Vault-Token: $VAULT_MOXIEDEV_TOKEN" -X GET https://vault-labdroid.apps.ocp.labdroid.net/v1/secret/moxiedev
-
-SECRETS=`strace curl --verbose -H "X-Vault-Token: $VAULT_MOXIEDEV_TOKEN" -X GET https://vault-labdroid.apps.ocp.labdroid.net/v1/secret/moxiedev`
+SECRETS=`curl --verbose -H "X-Vault-Token: $VAULT_MOXIEDEV_TOKEN" -X GET https://vault-labdroid.apps.ocp.labdroid.net/v1/secret/moxiedev`
 echo $SECRETS | (umask 077 && jq -r .data.id_moxiedev_rsa > /tmp/id_rsa)
 git config --global user.email "bot@moxielogic.com"
 git config --global user.name "Moxie Bot"
