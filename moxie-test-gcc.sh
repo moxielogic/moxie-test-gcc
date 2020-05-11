@@ -2,6 +2,8 @@
 
 set -x
 
+NJOBS=4
+
 export HOME=/home/moxie
 
 export PATH=/opt/moxielogic/bin:$PATH
@@ -49,8 +51,8 @@ cd build
 		  --disable-libssp \
 		  --with-newlib \
 		  --with-headers=/opt/moxielogic/moxie-elf/include;
-make all;
-make check RUNTESTFLAGS="CFLAGS_FOR_TARGET='-isystem /opt/moxielogic/moxie-elf/include' --target_board moxie-sim ${expfile}") 2>&1 | tee report.txt
+make -j ${NJOBS} all;
+make -j ${NJOBS} check RUNTESTFLAGS="CFLAGS_FOR_TARGET='-isystem /opt/moxielogic/moxie-elf/include' --target_board moxie-sim ${expfile}") 2>&1 | tee report.txt
 
 wget -qO - https://rl.gl/cli/rlgl-linux-amd64.tgz | \
     tar --strip-components=2 -xvzf - ./rlgl/rlgl
