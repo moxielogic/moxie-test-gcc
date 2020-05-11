@@ -7,6 +7,7 @@ ENV USER_NAME=moxie \
     HOME=/home/moxie
 
 RUN rpm -ivh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm && \
+    rpm -ivh https://repos.moxielogic.org:7007/MoxieLogic/noarch/moxielogic-repo-latest.noarch.rpm && \
     yum -y install git curl jq \
                    patch \
                    autogen \
