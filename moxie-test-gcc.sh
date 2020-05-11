@@ -4,9 +4,6 @@ set -x
 
 export HOME=/home/moxie
 
-cd ${HOME}
-chmod go-rw ${HOME}/.msmtprc
-
 export PATH=/opt/moxielogic/bin:$PATH
 export DEJAGNU=${HOME}/site.exp
 
@@ -15,7 +12,9 @@ echo $SECRETS | (umask 077 && jq -r .data.id_moxiedev_rsa > /tmp/id_rsa)
 git config --global user.email "bot@moxielogic.com"
 git config --global user.name "Moxie Bot"
 
-cat > ~/.msmtprc <<EOF
+touch ~/.msmtprc && \
+    chmod go-rw ~/.msmtprc && \
+    cat > ~/.msmtprc <<EOF
 defaults
 logfile ~/.msmtp.log
 
