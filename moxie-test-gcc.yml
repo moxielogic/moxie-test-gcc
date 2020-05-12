@@ -10,19 +10,10 @@
         oc -n moxie \
           delete job moxie-test-gcc --grace-period=0 --ignore-not-found
 
-    - name: Template test pod
+    - name: Template test job
       set_fact:
         management_pod: "{{ lookup('file', 'moxie-test-gcc-job.yml') }}"
 
-    - name: Create test pod
+    - name: Create test job
       shell: |
         echo {{ management_pod | quote }} | oc apply -f -
-
-    - name: Wait for test pod to start
-      shell: |
-        oc -n moxie \
-          get pod moxie-test-gcc -o jsonpath="{.status.phase}"
-      register: result
-      until: result.stdout == "Running"
-      retries: 60
-      delay: 10
