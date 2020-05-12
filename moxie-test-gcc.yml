@@ -5,14 +5,14 @@
     KUBECONFIG: "/home/green/.kubeconfig"
 
   tasks:
-    - name: Delete any existing test pod
+    - name: Delete any existing test job
       shell: |
         oc -n moxie \
-          delete pod moxie-test-gcc --grace-period=0 --ignore-not-found
+          delete job moxie-test-gcc --grace-period=0 --ignore-not-found
 
     - name: Template test pod
       set_fact:
-        management_pod: "{{ lookup('file', 'moxie-test-gcc-pod.yml') }}"
+        management_pod: "{{ lookup('file', 'moxie-test-gcc-job.yml') }}"
 
     - name: Create test pod
       shell: |
@@ -26,8 +26,3 @@
       until: result.stdout == "Running"
       retries: 60
       delay: 10
-
-    - name: Run test
-      shell: |
-        oc -n moxie exec moxie-test-gcc -- \
-          bash -c "/root/moxie-test-gcc.sh"
