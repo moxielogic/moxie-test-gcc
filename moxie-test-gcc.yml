@@ -9,6 +9,10 @@
       shell: |
         oc -n moxie \
           delete job moxie-test-gcc --grace-period=0 --ignore-not-found
+      retries: 3
+      delay: 30
+      register: result
+      until: result is not failed
 
     - name: Template test job
       set_fact:
