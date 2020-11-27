@@ -18,12 +18,12 @@ RUN rpm -ivh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.
                    moxielogic-moxie-elf-newlib \
                    moxielogic-moxie-elf-binutils \
                    moxielogic-moxie-elf-gdb-sim && \
-    yum -y update 
-		   
+    yum -y update
+
 
 RUN mkdir -p /home/moxie /home/moxie/etc
 RUN chmod -R ug+x /home/moxie && sync && \
-    useradd -l -u ${USER_UID} -r -g 0 -d /home/moxie -s /sbin/nologin -c "${USER_NAME} user" ${USER_NAME} 
+    useradd -l -u ${USER_UID} -r -g 0 -d /home/moxie -s /sbin/nologin -c "${USER_NAME} user" ${USER_NAME}
 
 ADD Moxie_Logic.repo /etc/yum.repos.d/Moxie_Logic.repo
 ADD site.exp /home/moxie/site.exp
@@ -31,7 +31,7 @@ ADD moxie-sim.exp /home/moxie/moxie-sim.exp
 ADD test_results.patch /home/moxie/test_results.patch
 
 RUN mkdir /home/moxie/.ssh && ssh-keyscan github.com > /home/moxie/.ssh/known_hosts
-ADD config /home/moxie/.ssh/config
+ADD config /home/moxie/.ssh/config && chmod 644 /home/moxie/.ssh/config
 
 COPY ./moxie-test-gcc.sh /home/moxie/moxie-test-gcc.sh
 
