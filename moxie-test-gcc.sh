@@ -94,4 +94,8 @@ EOF
 
 # Notify personal dashboard
 
+WEBHOOK_USER=$(echo $SECRETS | jq -r .data.GREENBOARD_WEBHOOK_USER)
+WEBHOOK_PASSWORD=$(echo $SECRETS | jq -r .data.GREENBOARD_WEBHOOK_PASSWORD)
+WEBHOOK_URL=$(echo $SECRETS | jq -r .data.GREENBOARD_WEBHOOK_ALERT_URL)
+
 curl -u $WEBHOOK_USER:$WEBHOOK_PASSWORD -H 'Content-Type: application/json' -d '{\"message\": \"moxie-test-gcc $RLGL\"}' $WEBHOOK_URL
