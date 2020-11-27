@@ -90,7 +90,8 @@ Subject: moxie-elf-gcc testsuite git commit output
 EOF
 (cat header.txt; cat report.txt) | msmtp -A moxielogic green@moxielogic.com
 
+# -----------------------------------------------------------------------------
 
+# Notify personal dashboard
 
-
-
+curl -u $WEBHOOK_USER:$WEBHOOK_PASSWORD -H 'Content-Type: application/json' -d '{\"message\": \"moxie-test-gcc $RLGL\"}' $WEBHOOK_URL
