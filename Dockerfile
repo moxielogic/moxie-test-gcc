@@ -31,7 +31,8 @@ ADD moxie-sim.exp /home/moxie/moxie-sim.exp
 ADD test_results.patch /home/moxie/test_results.patch
 
 RUN mkdir /home/moxie/.ssh && ssh-keyscan github.com > /home/moxie/.ssh/known_hosts
-ADD config /home/moxie/.ssh/config && chmod 644 /home/moxie/.ssh/config
+ADD config /home/moxie/.ssh/config
+RUN chmod 644 /home/moxie/.ssh/config
 
 COPY ./moxie-test-gcc.sh /home/moxie/moxie-test-gcc.sh
 
