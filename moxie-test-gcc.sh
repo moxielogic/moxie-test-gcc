@@ -14,13 +14,6 @@ echo $SECRETS | (umask 077 && jq -r .data.id_moxiedev_rsa > /tmp/id_rsa)
 git config --global user.email "bot@moxielogic.com"
 git config --global user.name "Moxie Bot"
 
-
-WEBHOOK_USER=$(echo $SECRETS | jq -r .data.GREENBOARD_WEBHOOK_USER)
-WEBHOOK_PASSWORD=$(echo $SECRETS | jq -r .data.GREENBOARD_WEBHOOK_PASSWORD)
-WEBHOOK_URL=$(echo $SECRETS | jq -r .data.GREENBOARD_WEBHOOK_ALERT_URL)
-
-curl -u $WEBHOOK_USER:$WEBHOOK_PASSWORD -H 'Content-Type: application/json' -d '{\"message\": \"just testing\"}' $WEBHOOK_URL
-
 touch ~/.msmtprc && \
     chmod go-rw ~/.msmtprc && \
     cat > ~/.msmtprc <<EOF
@@ -105,4 +98,4 @@ WEBHOOK_USER=$(echo $SECRETS | jq -r .data.GREENBOARD_WEBHOOK_USER)
 WEBHOOK_PASSWORD=$(echo $SECRETS | jq -r .data.GREENBOARD_WEBHOOK_PASSWORD)
 WEBHOOK_URL=$(echo $SECRETS | jq -r .data.GREENBOARD_WEBHOOK_ALERT_URL)
 
-curl -u $WEBHOOK_USER:$WEBHOOK_PASSWORD -H 'Content-Type: application/json' -d '{\"message\": \"moxie-test-gcc $RLGL\"}' $WEBHOOK_URL
+curl -u $WEBHOOK_USER:$WEBHOOK_PASSWORD -H 'Content-Type: application/json' -d '{\"message\": \"moxie-test-gcc <a href=\\\"$RLGL\\\">$RLGL</a>\"}' $WEBHOOK_URL
